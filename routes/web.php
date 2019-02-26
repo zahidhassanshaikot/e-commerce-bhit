@@ -11,7 +11,14 @@
 |
 */
 
-Route::get('/', 'DeshboardController@index')->name('/');
+Route::group(['middleware' => 'auth','role:Super Admin|Admin'], function () {
+    Route::get('/', 'DeshboardController@index')->name('/');
+    Route::get('menu/manage', 'MenuController@index')->name('manage-menu');
+    Route::get('delete/menu/{id}', 'MenuController@deleteMenu')->name('delete-menu');
+    Route::post('new-menu/add', 'MenuController@newMenuAdd')->name('add-new-menu');
+
+});
+
 
 Auth::routes();
 
